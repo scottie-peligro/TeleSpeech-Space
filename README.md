@@ -20,6 +20,21 @@ There is no contact section, contact information, form, analytics, or tracking c
 
 The repository contains the website files and editable source. To publish the site, upload `dist/index.html` to a static web host.
 
+## Sevalla deployment
+
+The site uses the generated static files already committed in `dist`.
+
+- Repository: `scottie-peligro/TeleSpeech-Space`
+- Branch: `main` (automatic deployments enabled)
+- Build site before publishing: **Off**
+- Root directory: `.`
+- Publish directory: `dist`
+- Index file: `index.html`
+
+Sevalla should not run `npm install` or `npm run build`: this project has no npm dependencies or package.json. After editing `page.html` or assets, run `node build.cjs` locally and commit the updated `dist/index.html` along with the source before pushing. Sevalla then publishes the committed output.
+
+Site URL: https://telespeech-space-3wyt0.sevalla.page/
+
 ## Preview
 
 ![Telespeech Space website preview](preview-desktop.jpg)
