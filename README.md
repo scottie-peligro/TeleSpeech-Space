@@ -1,28 +1,58 @@
 # Telespeech Space
 
-The finished website is **dist/index.html**. Open this file in a browser or upload it as `index.html` to a static web host. It contains all CSS, JavaScript, fonts, the supplied SVG logo, and three product covers. No installation or build is needed to use it, and it does not request external assets.
+A single-page marketing site with a dark purple and pink space background, the original SVG logo, product descriptions, Courtney's biography, and links to the TPT store.
 
-All 11 navigation and product links lead to:
+The deployable website is **dist/index.html**. It contains its CSS, JavaScript, fonts, logo, and product artwork. No installation, external assets, or runtime dependencies are needed to view it.
+
+All navigation and shopping links lead to:
 https://www.teacherspayteachers.com/store/telespeech-space
 
-There is no contact section, contact information, form, analytics, or tracking code. The page works without JavaScript; JavaScript adds the current year, a header scroll style, gentle section entrance effects, and the FAQ's one-question-at-a-time behavior. Reduced-motion preferences are respected.
+There is no contact information, contact form, analytics, or tracking code. The full content, links, and FAQs work without JavaScript. JavaScript adds gentle entrance effects, the current year, and a motion toggle. The toggle remembers the visitor's preference on their device; system reduced-motion preferences take priority.
 
-## Editing
+## Editing product descriptions
 
-`page.html` is the readable source. `dist/assets` contains the source artwork and font files. After edits, run `node build.cjs` to regenerate the self-contained `dist/index.html`. Run `node preview.cjs` for a loopback preview at http://127.0.0.1:4175.
+Edit **products.json**, not the generated HTML. Each product is a separate entry with these fields:
+
+| Field | Content |
+| --- | --- |
+| `name` | Product name |
+| `category` | A short description of the resource's focus |
+| `image` | An image filename from `dist/assets` |
+| `imageAlt` | A useful text description of the image |
+| `description` | An array of paragraphs; add paragraphs as needed |
+| `skills` | The skills the activity supports |
+| `includes` | What comes with the resource |
+| `requirements` | Device requirements and other practical details |
+
+To add a product, copy an existing entry, change its fields, and add its image to `dist/assets`. Image formats: AVIF, PNG, JPG, and WebP. Order the entries in the order they should appear on the page. Product text is escaped during the build; use plain text, not HTML. Follow JSON syntax, including double quotes and commas between entries. The build reports missing fields or unsupported images.
+
+After any edit:
+
+1. Run `node build.cjs` in the project folder.
+2. Run `node preview.cjs` and open http://127.0.0.1:4175 to review the page.
+3. Commit the edited source, any new images, and **dist/index.html**, then push to GitHub.
+
+The current workflow uses a content file; there is no browser-based editing dashboard or database. Descriptions are rendered at build time, so visitors can read them even with JavaScript disabled.
+
+## Editing the design and biography
+
+**page.html** contains the page structure, biography, styling, and browser JavaScript. **build.cjs** combines it with product content and assets into the self-contained HTML file. Run the build after edits to either source file.
+
+The sole slogan is “Resources that work across screens and settings.” It appears once as the main heading. Section titles describe their content rather than introducing additional slogans. Decorative orbit lines and stars are circular; buttons and product layouts use rectangular edges rather than pill shapes or speech bubbles.
 
 ## Content and assets
 
 - Original logo: the user-supplied `Telespeech Space Logo.svg`, preserved unchanged.
-- Product titles, product cover images, feature summaries, and Courtney's background: the live Telespeech Space Teachers Pay Teachers storefront, reviewed October 12, 2026. The marketing copy was written for this site. Prices and customer ratings are intentionally omitted so the store remains the source for current details.
-- Featured products: Prepositions Potion Lab, Emoji Emotions, and Microwave Simulator.
-- Nunito font: Google Fonts, SIL Open Font License. See `FONT-LICENSE.txt`; the license is also embedded in the HTML.
-
-The repository contains the website files and editable source. To publish the site, upload `dist/index.html` to a static web host.
+- Product artwork: Telespeech Space Teachers Pay Teachers storefront.
+- Product copy: summaries of the product information reviewed from the storefront; confirm features and requirements when updating a listing.
+- Biography: Courtney's supplied experience, approach, and education, edited for grammar and readability.
+- Space background: lightweight embedded SVG stars, procedural clouds, and CSS color gradients.
+- Nunito font: SIL Open Font License, included in `FONT-LICENSE.txt` and embedded in the HTML.
+- Prices and customer ratings are omitted; TPT remains the source for purchase details.
 
 ## Sevalla deployment
 
-The site uses the generated static files already committed in `dist`.
+Sevalla publishes the generated files already committed in `dist`:
 
 - Repository: `scottie-peligro/TeleSpeech-Space`
 - Branch: `main` (automatic deployments enabled)
@@ -31,10 +61,12 @@ The site uses the generated static files already committed in `dist`.
 - Publish directory: `dist`
 - Index file: `index.html`
 
-Sevalla should not run `npm install` or `npm run build`: this project has no npm dependencies or package.json. After editing `page.html` or assets, run `node build.cjs` locally and commit the updated `dist/index.html` along with the source before pushing. Sevalla then publishes the committed output.
+Do not run `npm install` or `npm run build` on Sevalla: this project has no npm dependencies or package.json. Build locally with `node build.cjs` and commit the generated output before pushing.
 
 Site URL: https://telespeech-space-3wyt0.sevalla.page/
 
 ## Preview
 
-![Telespeech Space website preview](preview-desktop.jpg)
+![Desktop redesign](preview-desktop.jpg)
+
+![Mobile redesign](preview-mobile.jpg)
